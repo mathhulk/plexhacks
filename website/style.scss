@@ -4,7 +4,120 @@ body {
 	background-color: #f8f9fa;
 }
 
+#page-recent {
+	padding-top: 48px;
+}
+
+.bill {
+	background-color: white;
+
+	border-radius: 0 0 8px 8px;
+
+	padding: 24px;
+
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	border: 1px solid rgba(0, 0, 0, 0.1);
+
+	position: relative;
+
+	transition: box-shadow 100ms ease-in-out;
+
+	&:hover {
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.075);
+
+		cursor: pointer;
+	}
+
+	&::before {
+		content: "";
+
+		height: 4px;
+		width: 100%;
+
+		position: absolute;
+
+		background-color: rgb(255, 165, 0);
+
+		left: 0;
+		top: 0;
+	}
+
+	h2.bill-name {
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 1.25;
+		color: rgb(255, 165, 0);
+
+		margin-bottom: 4px;
+	}
+
+	p.bill-description {
+		font-size: 14px;
+		color: rgba(0, 0, 0, 0.5);
+
+		margin-bottom: 24px;
+
+		.important {
+			font-weight: 500;
+			color: black;
+		}
+	}
+
+	.bill-votes {
+		display: flex;
+		align-items: center;
+
+		margin-left: -24px;
+		margin-right: -24px;
+
+		.votes-for, .votes-against {
+			width: 50%;
+
+			padding: 16px 24px;
+
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			p.for-amount, p.against-amount {
+				font-size: 14px;
+				line-height: 1;
+
+				margin: 0;
+			}
+		}
+
+		.votes-for {
+			background-color: rgba(76, 175, 80, 0.1);
+
+			border-radius: 0 64px 64px 0;
+
+			color: rgb(76, 175, 80);
+
+			i {
+				margin-left: 8px;
+			}
+		}
+
+		.votes-against {
+			color: #f44336;
+
+			p.against-amount {
+				text-align: right;
+			}
+
+			i {
+				margin-right: 8px;
+			}
+		}
+	}
+}
+
 .navbar {
+	position: sticky;
+	top: 0;
+
 	background-color: white;
 
 	padding: 0;
@@ -14,6 +127,13 @@ body {
 	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	a.navbar-brand {
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 1;
+		color: rgb(255, 165, 0);
+	}
 
 	ul.navbar-nav {
 		flex-direction: row;
