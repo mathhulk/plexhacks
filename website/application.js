@@ -428,7 +428,7 @@ Vue.component("page-explore", {
 
 				<h2 class="local-title">Explore an example</h2>
 
-				<p class="description">Browse the <span class="important">54</span> Congress members from <span class="important">California</span>.</p>
+				<p class="description">Browse the <span class="important">56</span> Congress members from <span class="important">California</span>.</p>
 
 				<a class="button" @click="openPoliticiansPage( )">Congress members</a>
 			</div>
