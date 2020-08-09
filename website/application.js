@@ -244,7 +244,8 @@ Vue.component("core", {
 	<div id="website">
 		<nav class="navbar">
 		  	<div class="container">
-		    	<a class="navbar-brand" href="#"><span class="important">polyglass.</span> political transparency.</a>
+		    	<a class="navbar-brand"
+				   @click="openExplorePage( )"><span class="important">polyglass.</span> political transparency.</a>
 
 		      	<ul class="navbar-nav ml-auto">
 			        <li class="nav-item"
@@ -252,8 +253,7 @@ Vue.component("core", {
 						@click="setCurrentPage(identifier)">
 
 			          	<a class="nav-link"
-						   :class="{ active: currentPage === identifier }"
-						   href="#">
+						   :class="{ active: currentPage === identifier }">
 						   {{ page.name }}</a>
 			        </li>
 		      	</ul>
@@ -304,6 +304,10 @@ Vue.component("core", {
 	methods: {
 		setCurrentPage(page) {
 			this.currentPage = page;
+		},
+
+		openExplorePage( ) {
+			this.currentPage = "explore";
 		},
 
 		openBill(bill) {
@@ -363,11 +367,11 @@ Vue.component("page-explore", {
 				</div>
 
 				<div class="splash-buttons">
-					<a class="button">Learn more</a><!--
+					<a class="button" @click="scrollToFeatures( )">Learn more</a><!--
 
 					Removes whitespace
 
-					--><a class="button">Explore an example</a>
+					--><a class="button" @click="scrollToExample( )">Explore an example</a>
 				</div>
 			</div>
 		</div>
@@ -426,7 +430,7 @@ Vue.component("page-explore", {
 
 				<p class="description">Browse the <span class="important">54</span> Congress members from <span class="important">California</span>.</p>
 
-				<a class="button" @click="openPoliticians( )">Congress members</a>
+				<a class="button" @click="openPoliticiansPage( )">Congress members</a>
 			</div>
 
 			<div class="row">
@@ -452,8 +456,28 @@ Vue.component("page-explore", {
 	},
 
 	methods: {
-		openPoliticians( ) {
+		openPoliticiansPage( ) {
 			eventBus.$emit("set-current-page", "politicians");
+		},
+
+		scrollToFeatures( ) {
+			const top = $("#features").offset( ).top;
+
+			window.scroll({
+			  	top: top,
+			  	left: 0,
+			  	behavior: "smooth"
+			});
+		},
+
+		scrollToExample( ) {
+			const top = $("#local").offset( ).top - 64;
+
+			window.scroll({
+			  	top: top,
+			  	left: 0,
+			  	behavior: "smooth"
+			});
 		},
 
 		// Redundant from politicians page
@@ -794,10 +818,19 @@ Vue.component("page-politician", {
 	<div id="page-politician">
 		<div class="header">
 			<div class="container">
-				<div class="party"
-					 :class="partyClass">{{ partyName }}</div>
-				<h1 class="title">{{ name }}</h1>
-				<p class="description"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
+				<div class="header-split">
+					<div class="header-left">
+						<div class="party"
+							 :class="partyClass">{{ partyName }}</div>
+						<h1 class="title">{{ name }}</h1>
+						<p class="description"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
+					</div>
+
+					<a class="button" target="_blank" :href="url">Website</a>
+					<a v-if="twitter" target="_blank" class="button" :href="url">Twitter</a>
+					<a v-if="facebook" target="_blank" class="button" :href="facebook_url">Facebook</a>
+					<a v-if="youtube" target="_blank" class="button" :href="youtube_url">YouTube</a>
+				</div>
 			</div>
 		</div>
 
@@ -841,6 +874,11 @@ Vue.component("page-politician", {
 			state: null,
 			role: null,
 
+			url: null,
+			twitter: null,
+			facebook: null,
+			youtube: null,
+
 			votes: null
 		};
 	},
@@ -870,6 +908,18 @@ Vue.component("page-politician", {
 
 		partyName( ) {
 			return this.party ? this.party.charAt(0).toUpperCase( ) + this.party.slice(1) : null;
+		},
+
+		twitter_url( ) {
+			return "https://twitter.com/" + this.twitter;
+		},
+
+		facebook_url( ) {
+			return "https://facebook.com/" + this.facebook;
+		},
+
+		youtube_url( ) {
+			return "https://youtube.com/c/" + this.youtube;
 		}
 	},
 
@@ -886,9 +936,16 @@ Vue.component("page-politician", {
 			const result = response.results[0];
 			const role = result.roles[0];
 
+			console.log(result);
+
 			this.name = result.first_name + " " + result.last_name;
 			this.role = role.title;
 			this.state = states[ states.findIndex(state => state.abbreviation === role.state) ].name;
+
+			this.url = result.url;
+			this.twitter = result.twitter_account;
+			this.facebook = result.facebook_account;
+			this.youtube = result.youtube_account;
 
 			switch(result.current_party) {
 				case "R":

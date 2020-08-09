@@ -173,7 +173,7 @@ a.button {
 
 	font-size: 12px;
 	font-weight: 500;
-	color: rgba(255, 255, 255, 0.75);
+	color: white;
 	line-height: 1;
 
 	padding: 6px 12px;
@@ -250,6 +250,19 @@ p.explanation {
 	padding-bottom: 48px;
 
 	position: relative;
+
+	.header-split {
+		display: flex;
+		align-items: center;
+
+		> :not(:last-child) {
+			margin-right: 8px;
+		}
+
+		.header-left {
+			flex-grow: 1;
+		}
+	}
 }
 
 #page-politicians, #page-bills {
@@ -411,6 +424,10 @@ p.explanation {
 			color: rgb(255, 165, 0);
 			font-weight: 700;
 		}
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	ul.navbar-nav {
@@ -458,6 +475,8 @@ p.explanation {
 
 				&:hover {
 					color: black;
+
+					cursor: pointer;
 				}
 
 				&.active {
