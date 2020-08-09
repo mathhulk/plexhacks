@@ -4,22 +4,110 @@ body {
 	background-color: #f8f9fa;
 }
 
-#page-recent {
-	padding-top: 48px;
+h1, h2, h3, h4, h5, p {
+	margin: 0;
 }
 
-.bill {
+.party {
+	display: inline-block;
+
+	border-radius: 24px;
+
+	font-size: 12px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.75);
+	line-height: 1;
+
+	padding: 6px 12px;
+
+	background-color: rgba(0, 0, 0, 0.5);
+
+	margin-bottom: 8px;
+
+	&.party-republican {
+		background-color: #f44336;
+	}
+
+	&.party-democrat {
+		background-color: #3d5afe;
+	}
+}
+
+h2.title, h1.title {
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: rgb(255, 165, 0);
+
+	margin-bottom: 4px;
+}
+
+p.description {
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.5);
+	line-height: 1;
+
+	&:not(:last-child) {
+		margin-bottom: 24px;
+	}
+
+	.important {
+		font-weight: 500;
+		color: black;
+	}
+}
+
+h3.heading {
+	font-weight: 500;
+	font-size: 14px;
+	color: black;
+
+	margin-bottom: 4px;
+}
+
+p.explanation {
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.5);
+	line-height: 1.25;
+
+	&:not(:last-child) {
+		margin-bottom: 24px;
+	}
+}
+
+.navbar.navbar-inline {
+	position: relative;
+
+	z-index: 1;
+
+	margin-bottom: 24px;
+}
+
+.header {
+	z-index: 2;
+
 	background-color: white;
 
+	padding-top: 48px;
+	padding-bottom: 48px;
+
+	position: relative;
+}
+
+#page-politicians, #page-bills {
+	padding-top: 24px;
+}
+
+.board {
+	background-color: white;
 	border-radius: 0 0 8px 8px;
-
-	padding: 24px;
-
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
 	border: 1px solid rgba(0, 0, 0, 0.1);
 
 	position: relative;
+	padding: 24px;
+	margin-bottom: 24px;
+
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
 	transition: box-shadow 100ms ease-in-out;
 
@@ -43,28 +131,48 @@ body {
 		top: 0;
 	}
 
-	h2.bill-name {
-		font-size: 24px;
-		font-weight: 700;
-		line-height: 1.25;
-		color: rgb(255, 165, 0);
-
-		margin-bottom: 4px;
+	p.explanation {
+		margin-bottom: 24px;
 	}
 
-	p.bill-description {
-		font-size: 14px;
+	.vote {
+		margin-left: -24px;
+
+		padding: 16px 24px;
+
+		background-color: rgba(0, 0, 0, 0.1);
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		border-radius: 0 64px 64px 0;
+
 		color: rgba(0, 0, 0, 0.5);
 
-		margin-bottom: 24px;
+		&.vote-for {
+			background-color: rgba(76, 175, 80, 0.1);
 
-		.important {
-			font-weight: 500;
-			color: black;
+			color: rgb(76, 175, 80);
+		}
+
+		&.vote-against {
+			background-color: rgba(244, 67, 54, 0.1);
+
+			color: rgb(244, 67, 54);
+		}
+
+		p.vote-position {
+			font-size: 14px;
+			line-height: 1;
+		}
+
+		i {
+			margin-left: 24px;
 		}
 	}
 
-	.bill-votes {
+	.votes {
 		display: flex;
 		align-items: center;
 
@@ -115,8 +223,7 @@ body {
 }
 
 .navbar {
-	position: sticky;
-	top: 0;
+	z-index: 950;
 
 	background-color: white;
 
@@ -127,6 +234,18 @@ body {
 	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	&.navbar-inline {
+		min-height: 56px;
+
+		ul.navbar-nav li.nav-item {
+			min-height: 56px;
+
+			a.nav-link.active {
+				border-radius: 8px 8px 0 0;
+			}
+		}
+	}
 
 	a.navbar-brand {
 		font-size: 24px;
@@ -157,25 +276,38 @@ body {
 				padding-right: 12px;
 				padding-left: 12px;
 
-				&.active {
-					position: relative;
+				transition: color 100ms ease-in-out,
+							background-color 100ms ease-in-out;
 
+				position: relative;
+
+				&::after {
+					content: "";
+
+					height: 2px;
+					width: 100%;
+
+					position: absolute;
+
+					background-color: transparent;
+
+					left: 0;
+					bottom: 0;
+
+					transition: background-color 100ms ease-in-out;
+				}
+
+				&:hover {
+					color: black;
+				}
+
+				&.active {
 					background-color: rgba(255, 165, 0, 0.1);
 
 					color: rgb(255, 165, 0);
 
 					&::after {
-						content: "";
-
-						height: 2px;
-						width: 100%;
-
-						position: absolute;
-
 						background-color: rgb(255, 165, 0);
-
-						left: 0;
-						bottom: 0;
 					}
 				}
 			}

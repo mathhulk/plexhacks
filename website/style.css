@@ -2,21 +2,82 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #f8f9fa; }
 
-#page-recent {
-  padding-top: 48px; }
+h1, h2, h3, h4, h5, p {
+  margin: 0; }
 
-.bill {
+.party {
+  display: inline-block;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1;
+  padding: 6px 12px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px; }
+  .party.party-republican {
+    background-color: #f44336; }
+  .party.party-democrat {
+    background-color: #3d5afe; }
+
+h2.title, h1.title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: orange;
+  margin-bottom: 4px; }
+
+p.description {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1; }
+  p.description:not(:last-child) {
+    margin-bottom: 24px; }
+  p.description .important {
+    font-weight: 500;
+    color: black; }
+
+h3.heading {
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+  margin-bottom: 4px; }
+
+p.explanation {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.25; }
+  p.explanation:not(:last-child) {
+    margin-bottom: 24px; }
+
+.navbar.navbar-inline {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 24px; }
+
+.header {
+  z-index: 2;
+  background-color: white;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  position: relative; }
+
+#page-politicians, #page-bills {
+  padding-top: 24px; }
+
+.board {
   background-color: white;
   border-radius: 0 0 8px 8px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: box-shadow 100ms ease-in-out; }
-  .bill:hover {
+  .board:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.075);
     cursor: pointer; }
-  .bill::before {
+  .board::before {
     content: "";
     height: 4px;
     width: 100%;
@@ -24,55 +85,69 @@ body {
     background-color: orange;
     left: 0;
     top: 0; }
-  .bill h2.bill-name {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.25;
-    color: orange;
-    margin-bottom: 4px; }
-  .bill p.bill-description {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.5);
+  .board p.explanation {
     margin-bottom: 24px; }
-    .bill p.bill-description .important {
-      font-weight: 500;
-      color: black; }
-  .bill .bill-votes {
+  .board .vote {
+    margin-left: -24px;
+    padding: 16px 24px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 64px 64px 0;
+    color: rgba(0, 0, 0, 0.5); }
+    .board .vote.vote-for {
+      background-color: rgba(76, 175, 80, 0.1);
+      color: #4caf50; }
+    .board .vote.vote-against {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #f44336; }
+    .board .vote p.vote-position {
+      font-size: 14px;
+      line-height: 1; }
+    .board .vote i {
+      margin-left: 24px; }
+  .board .votes {
     display: flex;
     align-items: center;
     margin-left: -24px;
     margin-right: -24px; }
-    .bill .bill-votes .votes-for, .bill .bill-votes .votes-against {
+    .board .votes .votes-for, .board .votes .votes-against {
       width: 50%;
       padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between; }
-      .bill .bill-votes .votes-for p.for-amount, .bill .bill-votes .votes-for p.against-amount, .bill .bill-votes .votes-against p.for-amount, .bill .bill-votes .votes-against p.against-amount {
+      .board .votes .votes-for p.for-amount, .board .votes .votes-for p.against-amount, .board .votes .votes-against p.for-amount, .board .votes .votes-against p.against-amount {
         font-size: 14px;
         line-height: 1;
         margin: 0; }
-    .bill .bill-votes .votes-for {
+    .board .votes .votes-for {
       background-color: rgba(76, 175, 80, 0.1);
       border-radius: 0 64px 64px 0;
       color: #4caf50; }
-      .bill .bill-votes .votes-for i {
+      .board .votes .votes-for i {
         margin-left: 8px; }
-    .bill .bill-votes .votes-against {
+    .board .votes .votes-against {
       color: #f44336; }
-      .bill .bill-votes .votes-against p.against-amount {
+      .board .votes .votes-against p.against-amount {
         text-align: right; }
-      .bill .bill-votes .votes-against i {
+      .board .votes .votes-against i {
         margin-right: 8px; }
 
 .navbar {
-  position: sticky;
-  top: 0;
+  z-index: 950;
   background-color: white;
   padding: 0;
   min-height: 64px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+  .navbar.navbar-inline {
+    min-height: 56px; }
+    .navbar.navbar-inline ul.navbar-nav li.nav-item {
+      min-height: 56px; }
+      .navbar.navbar-inline ul.navbar-nav li.nav-item a.nav-link.active {
+        border-radius: 8px 8px 0 0; }
   .navbar a.navbar-brand {
     font-size: 24px;
     font-weight: 700;
@@ -92,18 +167,24 @@ body {
         display: flex;
         align-items: center;
         padding-right: 12px;
-        padding-left: 12px; }
+        padding-left: 12px;
+        transition: color 100ms ease-in-out, background-color 100ms ease-in-out;
+        position: relative; }
+        .navbar ul.navbar-nav li.nav-item a.nav-link::after {
+          content: "";
+          height: 2px;
+          width: 100%;
+          position: absolute;
+          background-color: transparent;
+          left: 0;
+          bottom: 0;
+          transition: background-color 100ms ease-in-out; }
+        .navbar ul.navbar-nav li.nav-item a.nav-link:hover {
+          color: black; }
         .navbar ul.navbar-nav li.nav-item a.nav-link.active {
-          position: relative;
           background-color: rgba(255, 165, 0, 0.1);
           color: orange; }
           .navbar ul.navbar-nav li.nav-item a.nav-link.active::after {
-            content: "";
-            height: 2px;
-            width: 100%;
-            position: absolute;
-            background-color: orange;
-            left: 0;
-            bottom: 0; }
+            background-color: orange; }
 
 /*# sourceMappingURL=style.css.map */

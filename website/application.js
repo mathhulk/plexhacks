@@ -1,3 +1,242 @@
+const states = [
+    {
+        "name": "Alabama",
+        "abbreviation": "AL"
+    },
+    {
+        "name": "Alaska",
+        "abbreviation": "AK"
+    },
+    {
+        "name": "American Samoa",
+        "abbreviation": "AS"
+    },
+    {
+        "name": "Arizona",
+        "abbreviation": "AZ"
+    },
+    {
+        "name": "Arkansas",
+        "abbreviation": "AR"
+    },
+    {
+        "name": "California",
+        "abbreviation": "CA"
+    },
+    {
+        "name": "Colorado",
+        "abbreviation": "CO"
+    },
+    {
+        "name": "Connecticut",
+        "abbreviation": "CT"
+    },
+    {
+        "name": "Delaware",
+        "abbreviation": "DE"
+    },
+    {
+        "name": "District Of Columbia",
+        "abbreviation": "DC"
+    },
+    {
+        "name": "Federated States Of Micronesia",
+        "abbreviation": "FM"
+    },
+    {
+        "name": "Florida",
+        "abbreviation": "FL"
+    },
+    {
+        "name": "Georgia",
+        "abbreviation": "GA"
+    },
+    {
+        "name": "Guam",
+        "abbreviation": "GU"
+    },
+    {
+        "name": "Hawaii",
+        "abbreviation": "HI"
+    },
+    {
+        "name": "Idaho",
+        "abbreviation": "ID"
+    },
+    {
+        "name": "Illinois",
+        "abbreviation": "IL"
+    },
+    {
+        "name": "Indiana",
+        "abbreviation": "IN"
+    },
+    {
+        "name": "Iowa",
+        "abbreviation": "IA"
+    },
+    {
+        "name": "Kansas",
+        "abbreviation": "KS"
+    },
+    {
+        "name": "Kentucky",
+        "abbreviation": "KY"
+    },
+    {
+        "name": "Louisiana",
+        "abbreviation": "LA"
+    },
+    {
+        "name": "Maine",
+        "abbreviation": "ME"
+    },
+    {
+        "name": "Marshall Islands",
+        "abbreviation": "MH"
+    },
+    {
+        "name": "Maryland",
+        "abbreviation": "MD"
+    },
+    {
+        "name": "Massachusetts",
+        "abbreviation": "MA"
+    },
+    {
+        "name": "Michigan",
+        "abbreviation": "MI"
+    },
+    {
+        "name": "Minnesota",
+        "abbreviation": "MN"
+    },
+    {
+        "name": "Mississippi",
+        "abbreviation": "MS"
+    },
+    {
+        "name": "Missouri",
+        "abbreviation": "MO"
+    },
+    {
+        "name": "Montana",
+        "abbreviation": "MT"
+    },
+    {
+        "name": "Nebraska",
+        "abbreviation": "NE"
+    },
+    {
+        "name": "Nevada",
+        "abbreviation": "NV"
+    },
+    {
+        "name": "New Hampshire",
+        "abbreviation": "NH"
+    },
+    {
+        "name": "New Jersey",
+        "abbreviation": "NJ"
+    },
+    {
+        "name": "New Mexico",
+        "abbreviation": "NM"
+    },
+    {
+        "name": "New York",
+        "abbreviation": "NY"
+    },
+    {
+        "name": "North Carolina",
+        "abbreviation": "NC"
+    },
+    {
+        "name": "North Dakota",
+        "abbreviation": "ND"
+    },
+    {
+        "name": "Northern Mariana Islands",
+        "abbreviation": "MP"
+    },
+    {
+        "name": "Ohio",
+        "abbreviation": "OH"
+    },
+    {
+        "name": "Oklahoma",
+        "abbreviation": "OK"
+    },
+    {
+        "name": "Oregon",
+        "abbreviation": "OR"
+    },
+    {
+        "name": "Palau",
+        "abbreviation": "PW"
+    },
+    {
+        "name": "Pennsylvania",
+        "abbreviation": "PA"
+    },
+    {
+        "name": "Puerto Rico",
+        "abbreviation": "PR"
+    },
+    {
+        "name": "Rhode Island",
+        "abbreviation": "RI"
+    },
+    {
+        "name": "South Carolina",
+        "abbreviation": "SC"
+    },
+    {
+        "name": "South Dakota",
+        "abbreviation": "SD"
+    },
+    {
+        "name": "Tennessee",
+        "abbreviation": "TN"
+    },
+    {
+        "name": "Texas",
+        "abbreviation": "TX"
+    },
+    {
+        "name": "Utah",
+        "abbreviation": "UT"
+    },
+    {
+        "name": "Vermont",
+        "abbreviation": "VT"
+    },
+    {
+        "name": "Virgin Islands",
+        "abbreviation": "VI"
+    },
+    {
+        "name": "Virginia",
+        "abbreviation": "VA"
+    },
+    {
+        "name": "Washington",
+        "abbreviation": "WA"
+    },
+    {
+        "name": "West Virginia",
+        "abbreviation": "WV"
+    },
+    {
+        "name": "Wisconsin",
+        "abbreviation": "WI"
+    },
+    {
+        "name": "Wyoming",
+        "abbreviation": "WY"
+    }
+];
+
 let eventBus = new Vue( );
 
 Vue.component("core", {
@@ -30,9 +269,9 @@ Vue.component("core", {
 	data( ) {
 		return {
 			pages: {
-				recent: {
-					name: "Recent",
-					component: "page-recent"
+				movements: {
+					name: "Movements",
+					component: "page-movements"
 				},
 
 				bills: {
@@ -56,7 +295,7 @@ Vue.component("core", {
 				}
 			},
 
-			currentPage: "recent",
+			currentPage: "movements",
 			currentBill: null,
 			currentPolitician: null
 		};
@@ -64,29 +303,17 @@ Vue.component("core", {
 
 	methods: {
 		setCurrentPage(page) {
-			if(this.pages[page].name) {
-				// Prevent incorrect data sharing between components
-				this.currentBill = null;
-				this.currentPolitician = null;
-			}
-
 			this.currentPage = page;
 		},
 
 		openBill(bill) {
-			// Prevent incorrect data sharing between components
-			this.currentPolitician = null;
-
-			this.setCurrentPage("bill");
 			this.currentBill = bill;
+			this.setCurrentPage("bill");
 		},
 
 		openPolitician(politician) {
-			// Prevent incorrect data sharing between components
-			this.currentBill = null;
-
-			this.setCurrentPage("politician");
 			this.currentPolitician = politician;
+			this.setCurrentPage("politician");
 		}
 	},
 
@@ -118,30 +345,329 @@ Vue.component("core", {
 	}
 });
 
-Vue.component("page-recent", {
+Vue.component("page-movements", {
 	template: `
-	<div id="page-recent">
+	<div id="page-movements">
+
+	</div>
+	`,
+
+	data( ) {
+		return {
+
+		};
+	}
+});
+
+Vue.component("page-bills", {
+	template: `
+	<div id="page-bills">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 col-xl-4"
+				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="bill in bills">
+					<div class="board"
+					 	 @click="openBill(bill.identifier)">
+						<div class="party"
+							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
+						<h2 class="title">{{ politician.name }}</h2>
+						<p class="description"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	`,
 
-					<div class="bill" @click="openBill(bill.identifier)">
-						<h2 class="bill-name">{{ bill.name }}</h2>
-						<p class="bill-description"><span class="important">{{ bill.root }}</span> introduced on <span class="important">{{ bill.introduced_at }}</span></p>
+	data( ) {
+		return {
+			politicians: [ ],
+			currentPoliticians: [ ]
+		};
+	},
 
-						<div class="bill-votes">
-							<div class="votes-for">
-								<p class="for-amount">{{ bill.votes.for }} votes for</p>
+	methods: {
+		getPartyClass(party) {
+			return "party-" + party;
+		},
 
-								<i class="material-icons">thumb_up</i>
-							</div>
+		getPartyName(party) {
+			return party.charAt(0).toUpperCase( ) + party.slice(1);
+		},
 
-							<div class="votes-against">
-								<i class="material-icons">thumb_down</i>
+		openPolitician(politician) {
+			eventBus.$emit("open-politician", politician);
+		}
+	},
 
-								<p class="against-amount">{{ bill.votes.against }} votes against</p>
-							</div>
+	mounted( ) {
+		let members = [ ];
+
+		const senateRequest = {
+			url: "https://api.propublica.org/congress/v1/116/senate/members.json?in_office=true",
+			method: "GET",
+			headers: {
+				"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+			}
+		};
+
+		$.ajax(senateRequest).done(response => {
+			members = members.concat( response.results[0].members );
+
+			const houseRequest = {
+				url: "https://api.propublica.org/congress/v1/116/house/members.json?in_office=true",
+				method: "GET",
+				headers: {
+					"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+				}
+			};
+
+			$.ajax(houseRequest).done(response => {
+				members = members.concat( response.results[0].members );
+
+				for(const member of members) {
+					const politician = {
+						identifier: member.id,
+						name: member.first_name + " " + member.last_name,
+						role: member.title,
+						state: states[ states.findIndex(state => state.abbreviation === member.state) ].name
+					};
+
+					switch(member.party) {
+						case "R":
+							politician.party = "republican";
+
+							break;
+
+						case "D":
+							politician.party = "democrat";
+
+							break;
+
+						default:
+							politician.party = "other"
+					};
+
+					this.politicians.push(politician);
+				}
+
+				this.currentPoliticians = this.politicians;
+			});
+		});
+	}
+});
+
+Vue.component("page-politicians", {
+	template: `
+	<div id="page-politicians">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3 col-lg-4 col-md-6"
+					 v-for="politician in currentPoliticians">
+					<div class="board"
+					 	  @click="openPolitician(politician.identifier)">
+						<div class="party"
+							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
+						<h2 class="title">{{ politician.name }}</h2>
+						<p class="description"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	`,
+
+	data( ) {
+		return {
+			politicians: [ ],
+			currentPoliticians: [ ]
+		};
+	},
+
+	methods: {
+		getPartyClass(party) {
+			return "party-" + party;
+		},
+
+		getPartyName(party) {
+			return party.charAt(0).toUpperCase( ) + party.slice(1);
+		},
+
+		openPolitician(politician) {
+			eventBus.$emit("open-politician", politician);
+		}
+	},
+
+	mounted( ) {
+		let members = [ ];
+
+		const senateRequest = {
+			url: "https://api.propublica.org/congress/v1/116/senate/members.json?in_office=true",
+			method: "GET",
+			headers: {
+				"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+			}
+		};
+
+		$.ajax(senateRequest).done(response => {
+			members = members.concat( response.results[0].members );
+
+			const houseRequest = {
+				url: "https://api.propublica.org/congress/v1/116/house/members.json?in_office=true",
+				method: "GET",
+				headers: {
+					"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+				}
+			};
+
+			$.ajax(houseRequest).done(response => {
+				members = members.concat( response.results[0].members );
+
+				for(const member of members) {
+					const politician = {
+						identifier: member.id,
+						name: member.first_name + " " + member.last_name,
+						role: member.title,
+						state: states[ states.findIndex(state => state.abbreviation === member.state) ].name
+					};
+
+					switch(member.party) {
+						case "R":
+							politician.party = "republican";
+
+							break;
+
+						case "D":
+							politician.party = "democrat";
+
+							break;
+
+						default:
+							politician.party = "other"
+					};
+
+					this.politicians.push(politician);
+				}
+
+				this.currentPoliticians = this.politicians;
+			});
+		});
+	}
+});
+
+Vue.component("page-bill", {
+	props: [ "bill" ],
+
+	template: `
+	<div id="page-bill">
+		<div class="header">
+			<div class="container">
+				<h1 class="title">{{ short_title }}</h1>
+				<p class="description">Introduced on <span class="important">{{ introduced_at }}</span></p>
+
+				<h3 class="heading">Identifier</h3>
+				<p class="explanation">{{ number }}</p>
+
+				<h3 class="heading">Title</h3>
+				<p class="explanation">{{ title }}</p>
+
+				<h3 class="heading">Summary</h3>
+				<p class="explanation">{{ summary }}</p>
+			</div>
+		</div>
+
+		<nav class="navbar navbar-inline">
+			<div class="container">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active">Votes</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link active">Actions</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	`,
+
+	data( ) {
+		return {
+			identifier: null,
+			number: null,
+			title: null,
+			short_title: null,
+			congress_url: null,
+			introduced_at: null,
+			summary: null
+		};
+	},
+
+	mounted( ) {
+		const splitBill = this.bill.split("-");
+
+		const billRequest = {
+			url: "https://api.propublica.org/congress/v1/" + splitBill[1] + "/bills/" + splitBill[0] + ".json",
+			method: "GET",
+			headers: {
+				"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+			}
+		};
+
+		$.ajax(billRequest).done(response => {
+			const result = response.results[0];
+
+			this.identifier = result.bill_id;
+			this.number = result.number;
+			this.title = result.title;
+			this.short_title = result.short_title;
+			this.congress_url = result.congressdotgov_url;
+			this.introduced_at = result.introduced_date;
+			this.summary = result.summary;
+		});
+	}
+});
+
+Vue.component("page-politician", {
+	props: [ "politician" ],
+
+	template: `
+	<div id="page-politician">
+		<div class="header">
+			<div class="container">
+				<div class="party"
+					 :class="partyClass">{{ partyName }}</div>
+				<h1 class="title">{{ name }}</h1>
+				<p class="description"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
+			</div>
+		</div>
+
+		<nav class="navbar navbar-inline">
+			<div class="container">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active">Votes</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3 col-lg-4 col-md-6"
+					 v-for="vote in votes">
+					<div class="board"
+					 	 @click="openBill(vote.identifier)">
+						<h2 class="title">{{ vote.number }}</h2>
+						<p class="description"><span class="important">{{ vote.time }}</span> on <span class="important">{{ vote.date }}</span></p>
+
+						<p v-if="vote.title" class="explanation">{{ vote.title }}</p>
+
+						<div class="vote" :class="getVoteClass(vote.for)">
+							<p class="vote-position">Voted {{ getVotePosition(vote.for) }}</p>
+
+							<i class="material-icons">{{ getVoteIcon(vote.for) }}</i>
 						</div>
 					</div>
 				</div>
@@ -150,69 +676,108 @@ Vue.component("page-recent", {
 	</div>
 	`,
 
+	data( ) {
+		return {
+			name: null,
+			party: null,
+			state: null,
+			role: null,
+
+			votes: null
+		};
+	},
+
 	methods: {
+		getVoteIcon(position) {
+			return "thumb_" + (position ? "up" : "down");
+		},
+
+		getVoteClass(position) {
+			return "vote-" + (position ? "for" : "against");
+		},
+
+		getVotePosition(position) {
+			return position ? "for" : "against";
+		},
+
 		openBill(bill) {
 			eventBus.$emit("open-bill", bill);
 		}
 	},
 
-	data( ) {
-		return {
-			bills: [
-				{
-					identifier: 0,
+	computed: {
+		partyClass( ) {
+			return "party-" + this.party;
+		},
 
-					name: "Great American Outdoors Act",
-					root: "H.R.1957",
-					introduced_at: "3/28/2019",
+		partyName( ) {
+			return this.party ? this.party.charAt(0).toUpperCase( ) + this.party.slice(1) : null;
+		}
+	},
 
-					votes: {
-						for: 254,
-						against: 132
-					}
-				}
-			]
+	mounted( ) {
+		const memberRequest = {
+			url: "https://api.propublica.org/congress/v1/members/" + this.politician + ".json",
+			method: "GET",
+			headers: {
+				"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+			}
 		};
-	}
-});
 
-Vue.component("page-bills", {
+		$.ajax(memberRequest).done(response => {
+			const result = response.results[0];
+			const role = result.roles[0];
 
-});
+			this.name = result.first_name + " " + result.last_name;
+			this.role = role.title;
+			this.state = states[ states.findIndex(state => state.abbreviation === role.state) ].name;
 
-Vue.component("page-politicians", {
+			switch(result.current_party) {
+				case "R":
+					this.party = "republican";
 
-});
+					break;
 
-Vue.component("page-bill", {
-	props: [ "bill" ],
+				case "D":
+					this.party = "democrat";
 
-	template: `
+					break;
 
-	`,
+				default:
+					this.party = "other"
+			}
 
-	watch: {
-		bill( ) {
-			if( ! bill ) return;
+			const votesRequest = {
+				url: "https://api.propublica.org/congress/v1/members/" + this.politician + "/votes.json",
+				method: "GET",
+				headers: {
+					"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
+				}
+			};
 
-			// Load bill data
-		}
-	}
-});
+			$.ajax(votesRequest).done(response => {
+				const votes = response.results[0].votes;
 
-Vue.component("page-politician", {
-	props: [ "politician" ],
+				const bills = [ ];
 
-	template: `
+				for(const vote of votes) {
+					if( ! vote.bill.title ) continue;
 
-	`,
+					const bill = {
+						identifier: vote.bill.bill_id,
+						number: vote.bill.number,
+						title: vote.description,
+						date: vote.date,
+						time: vote.time,
+						for: vote.position === "Yes"
+					};
 
-	watch: {
-		politician( ) {
-			if( ! politician ) return;
+					bills.push(bill);
+				}
 
-			// Load politician data
-		}
+				this.votes = bills.sort( (firstBill, secondBill) => Date.parse(secondBill.time + " " + secondBill.date) - Date.parse(firstBill.time + " " + firstBill.date) );
+			});
+		});
 	}
 });
 
