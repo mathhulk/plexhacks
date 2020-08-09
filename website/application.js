@@ -368,10 +368,13 @@ Vue.component("page-bills", {
 					 v-for="bill in bills">
 					<div class="board"
 					 	 @click="openBill(bill.identifier)">
-						<div class="party"
-							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
-						<h2 class="title">{{ politician.name }}</h2>
-						<p class="description"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
+						<h2 class="title">{{ bill.number }}</h2>
+						<p class="description">Latest major action on <span class="important">{{ bill.latest_major_action_date }}</span></p>
+
+						<p class="explanation">{{ bill.title }}</p>
+
+						<h3 class="heading">Date introduced</h3>
+						<p class="explanation">{{ bill.introduced_at }}</p>
 					</div>
 				</div>
 			</div>
@@ -381,78 +384,45 @@ Vue.component("page-bills", {
 
 	data( ) {
 		return {
-			politicians: [ ],
-			currentPoliticians: [ ]
+			bills: [ ]
 		};
 	},
 
 	methods: {
-		getPartyClass(party) {
-			return "party-" + party;
-		},
-
-		getPartyName(party) {
-			return party.charAt(0).toUpperCase( ) + party.slice(1);
-		},
-
-		openPolitician(politician) {
-			eventBus.$emit("open-politician", politician);
+		openBill(bill) {
+			eventBus.$emit("open-bill", bill);
 		}
 	},
 
 	mounted( ) {
-		let members = [ ];
-
-		const senateRequest = {
-			url: "https://api.propublica.org/congress/v1/116/senate/members.json?in_office=true",
+		const billsRequest = {
+			url: "https://api.propublica.org/congress/v1/116/both/bills/passed.json",
 			method: "GET",
 			headers: {
 				"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
 			}
 		};
 
-		$.ajax(senateRequest).done(response => {
-			members = members.concat( response.results[0].members );
+		$.ajax(billsRequest).done(response => {
+			const passedBills = response.results[0].bills;
 
-			const houseRequest = {
-				url: "https://api.propublica.org/congress/v1/116/house/members.json?in_office=true",
-				method: "GET",
-				headers: {
-					"X-API-KEY": "xigJcsUsL9J2c7x9daKRMW7qXyJR6gZ1Ee25TZQY"
-				}
-			};
+			let bills = [ ];
 
-			$.ajax(houseRequest).done(response => {
-				members = members.concat( response.results[0].members );
+			for(const passedBill of passedBills) {
+				console.log(passedBill)
 
-				for(const member of members) {
-					const politician = {
-						identifier: member.id,
-						name: member.first_name + " " + member.last_name,
-						role: member.title,
-						state: states[ states.findIndex(state => state.abbreviation === member.state) ].name
-					};
+				const bill = {
+					identifier: passedBill.bill_id,
+					number: passedBill.number,
+					title: passedBill.title,
+					introduced_at: passedBill.introduced_date,
+					latest_major_action_date: passedBill.latest_major_action_date
+				};
 
-					switch(member.party) {
-						case "R":
-							politician.party = "republican";
+				bills.push(bill);
+			}
 
-							break;
-
-						case "D":
-							politician.party = "democrat";
-
-							break;
-
-						default:
-							politician.party = "other"
-					};
-
-					this.politicians.push(politician);
-				}
-
-				this.currentPoliticians = this.politicians;
-			});
+			this.bills = bills.sort( (firstBill, secondBill) => Date.parse(secondBill.latest_major_action_date) - Date.parse(firstBill.latest_major_action_date) );
 		});
 	}
 });
@@ -562,17 +532,21 @@ Vue.component("page-bill", {
 	<div id="page-bill">
 		<div class="header">
 			<div class="container">
-				<h1 class="title">{{ short_title }}</h1>
+				<h1 class="title">{{ currentTitle }}</h1>
 				<p class="description">Introduced on <span class="important">{{ introduced_at }}</span></p>
 
-				<h3 class="heading">Identifier</h3>
-				<p class="explanation">{{ number }}</p>
+				<template v-if="displayTitle">
+					<h3 class="heading">Identifier</h3>
+					<p class="explanation">{{ number }}</p>
+				</template>
 
 				<h3 class="heading">Title</h3>
 				<p class="explanation">{{ title }}</p>
 
-				<h3 class="heading">Summary</h3>
-				<p class="explanation">{{ summary }}</p>
+				<template v-if="summary && summary.length > 0">
+					<h3 class="heading">Summary</h3>
+					<p class="explanation">{{ summary }}</p>
+				</template>
 			</div>
 		</div>
 
@@ -584,7 +558,7 @@ Vue.component("page-bill", {
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link active">Actions</a>
+						<a class="nav-link">Actions</a>
 					</li>
 				</ul>
 			</div>
@@ -602,6 +576,16 @@ Vue.component("page-bill", {
 			introduced_at: null,
 			summary: null
 		};
+	},
+
+	computed: {
+		displayTitle( ) {
+			return this.short_title !== this.title;
+		},
+
+		currentTitle( ) {
+			return this.displayTitle ? this.short_title : this.number;
+		}
 	},
 
 	mounted( ) {

@@ -85,8 +85,6 @@ p.explanation {
     background-color: orange;
     left: 0;
     top: 0; }
-  .board p.explanation {
-    margin-bottom: 24px; }
   .board .vote {
     margin-left: -24px;
     padding: 16px 24px;
