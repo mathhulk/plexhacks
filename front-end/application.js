@@ -242,17 +242,17 @@ let eventBus = new Vue( );
 Vue.component("core", {
 	template: `
 	<div id="website">
-		<nav class="navbar">
+		<nav class="navigation-bar">
 		  	<div class="container">
-		    	<a class="navbar-brand"
+		    	<a class="navigation-bar-brand"
 				   @click="openExplorePage( )"><span class="important">polyglass.</span> political transparency.</a>
 
-		      	<ul class="navbar-nav ml-auto">
-			        <li class="nav-item"
+		      	<ul class="navigation-bar-menu ml-auto">
+			        <li class="menu-item"
 					 	v-for="(page, identifier) in navigationPages"
 						@click="setCurrentPage(identifier)">
 
-			          	<a class="nav-link"
+			          	<a class="item-link"
 						   :class="{ active: currentPage === identifier }">
 						   {{ page.name }}</a>
 			        </li>
@@ -426,9 +426,9 @@ Vue.component("page-explore", {
 					<path fill="rgb(255, 165, 0)" fill-opacity="0.1" d="M53.2,-67.6C68.6,-62,80.5,-46,80.9,-29.8C81.2,-13.6,70.2,2.8,60.5,15.7C50.9,28.7,42.7,38.1,32.9,46.7C23.1,55.2,11.5,62.7,-0.7,63.7C-13,64.7,-25.9,59.1,-37.8,51.3C-49.7,43.4,-60.6,33.3,-66.5,20.4C-72.4,7.4,-73.4,-8.4,-69.4,-23.2C-65.4,-37.9,-56.5,-51.7,-44.1,-58.3C-31.7,-64.8,-15.9,-64.1,1.5,-66.2C18.9,-68.3,37.8,-73.2,53.2,-67.6Z" transform="translate(100 100)" />
 				</svg>
 
-				<h2 class="local-title">Explore an example</h2>
+				<h2 class="heading mb-8px">Explore an example</h2>
 
-				<p class="description">Browse the <span class="important">56</span> Congress members from <span class="important">California</span>.</p>
+				<p class="paragraph mb-16px">Browse the <span class="important">56</span> Congress members from <span class="important">California</span>.</p>
 
 				<a class="button" @click="openPoliticiansPage( )">Congress members</a>
 			</div>
@@ -436,12 +436,12 @@ Vue.component("page-explore", {
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="politician in politicians">
-					<div class="board"
+					<div class="card card-hover mb-24px"
 						  @click="openPolitician(politician.identifier)">
-						<div class="party"
+						<div class="badge"
 							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
-						<h2 class="title">{{ politician.name }}</h2>
-						<p class="description"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
+						<h2 class="heading">{{ politician.name }}</h2>
+						<p class="paragraph"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
 					</div>
 				</div>
 			</div>
@@ -482,7 +482,7 @@ Vue.component("page-explore", {
 
 		// Redundant from politicians page
 		getPartyClass(party) {
-			return "party-" + party;
+			return "badge-" + party;
 		},
 
 		getPartyName(party) {
@@ -564,15 +564,15 @@ Vue.component("page-bills", {
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="bill in bills">
-					<div class="board"
+					<div class="card card-hover mb-24px"
 					 	 @click="openBill(bill.identifier)">
-						<h2 class="title">{{ bill.number }}</h2>
-						<p class="description">Latest major action on <span class="important">{{ bill.latest_major_action_date }}</span></p>
+						<h2 class="heading mb-4px">{{ bill.number }}</h2>
+						<p class="paragraph mb-24px">Latest major action on <span class="important">{{ bill.latest_major_action_date }}</span></p>
 
-						<p class="explanation">{{ bill.title }}</p>
+						<p class="paragraph mb-24px">{{ bill.title }}</p>
 
-						<h3 class="heading">Date introduced</h3>
-						<p class="explanation">{{ bill.introduced_at }}</p>
+						<h3 class="sub-heading mb-4px">Date introduced</h3>
+						<p class="paragraph">{{ bill.introduced_at }}</p>
 					</div>
 				</div>
 			</div>
@@ -632,12 +632,12 @@ Vue.component("page-politicians", {
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="politician in currentPoliticians">
-					<div class="board"
+					<div class="card card-hover mb-24px"
 					 	  @click="openPolitician(politician.identifier)">
-						<div class="party"
+						<div class="badge"
 							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
-						<h2 class="title">{{ politician.name }}</h2>
-						<p class="description"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
+						<h2 class="heading mb-4px">{{ politician.name }}</h2>
+						<p class="paragraph"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
 					</div>
 				</div>
 			</div>
@@ -654,7 +654,7 @@ Vue.component("page-politicians", {
 
 	methods: {
 		getPartyClass(party) {
-			return "party-" + party;
+			return "badge-" + party;
 		},
 
 		getPartyName(party) {
@@ -730,33 +730,33 @@ Vue.component("page-bill", {
 	<div id="page-bill">
 		<div class="header">
 			<div class="container">
-				<h1 class="title">{{ currentTitle }}</h1>
-				<p class="description">Introduced on <span class="important">{{ introduced_at }}</span></p>
+				<h1 class="heading mb-4px">{{ currentTitle }}</h1>
+				<p class="paragraph mb-24px">Introduced on <span class="important">{{ introduced_at }}</span></p>
 
 				<template v-if="displayTitle">
-					<h3 class="heading">Identifier</h3>
-					<p class="explanation">{{ number }}</p>
+					<h3 class="sub-heading mb-4px">Identifier</h3>
+					<p class="paragraph mb-24px">{{ number }}</p>
 				</template>
 
-				<h3 class="heading">Title</h3>
-				<p class="explanation">{{ title }}</p>
+				<h3 class="sub-heading mb-4px">Title</h3>
+				<p class="paragraph">{{ title }}</p>
 
 				<template v-if="summary && summary.length > 0">
-					<h3 class="heading">Summary</h3>
-					<p class="explanation">{{ summary }}</p>
+					<h3 class="sub-heading mb-4px mt-24px">Summary</h3>
+					<p class="paragraph">{{ summary }}</p>
 				</template>
 			</div>
 		</div>
 
-		<nav class="navbar navbar-inline">
+		<nav class="navigation-bar navigation-bar-inline">
 			<div class="container">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link active">Votes</a>
+				<ul class="navigation-bar-menu">
+					<li class="menu-item">
+						<a class="item-link active">Votes</a>
 					</li>
 
-					<li class="nav-item">
-						<a class="nav-link">Actions</a>
+					<li class="menu-item">
+						<a class="item-link">Actions</a>
 					</li>
 				</ul>
 			</div>
@@ -820,10 +820,10 @@ Vue.component("page-politician", {
 			<div class="container">
 				<div class="header-split">
 					<div class="header-left">
-						<div class="party"
+						<div class="badge"
 							 :class="partyClass">{{ partyName }}</div>
-						<h1 class="title">{{ name }}</h1>
-						<p class="description"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
+						<h1 class="heading mb-4px">{{ name }}</h1>
+						<p class="paragraph"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
 					</div>
 
 					<a class="button" target="_blank" :href="url">Website</a>
@@ -834,11 +834,11 @@ Vue.component("page-politician", {
 			</div>
 		</div>
 
-		<nav class="navbar navbar-inline">
+		<nav class="navigation-bar navigation-bar-inline mb-24px">
 			<div class="container">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link active">Votes</a>
+				<ul class="navigation-bar-menu">
+					<li class="menu-item">
+						<a class="item-link active">Votes</a>
 					</li>
 				</ul>
 			</div>
@@ -848,12 +848,12 @@ Vue.component("page-politician", {
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="vote in votes">
-					<div class="board"
+					<div class="card card-hover"
 					 	 @click="openBill(vote.identifier)">
-						<h2 class="title">{{ vote.number }}</h2>
-						<p class="description"><span class="important">{{ vote.time }}</span> on <span class="important">{{ vote.date }}</span></p>
+						<h2 class="heading mb-4px">{{ vote.number }}</h2>
+						<p class="paragraph mb-24px"><span class="important">{{ vote.time }}</span> on <span class="important">{{ vote.date }}</span></p>
 
-						<p v-if="vote.title" class="explanation">{{ vote.title }}</p>
+						<p v-if="vote.title" class="paragraph mb-24px">{{ vote.title }}</p>
 
 						<div class="vote" :class="getVoteClass(vote.for)">
 							<p class="vote-position">Voted {{ getVotePosition(vote.for) }}</p>
@@ -903,7 +903,7 @@ Vue.component("page-politician", {
 
 	computed: {
 		partyClass( ) {
-			return "party-" + this.party;
+			return "badge-" + this.party;
 		},
 
 		partyName( ) {
