@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	font-family: "Inter", sans-serif;
 
@@ -314,6 +318,85 @@ p.paragraph {
 	}
 }
 
+// Input
+input.input {
+	// Required for user agent
+	background-color: transparent;
+
+	font-family: "Inter", sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	color: black;
+	line-height: 1;
+
+	height: 38px;
+
+	border-type: solid;
+	border-width: 0 0 2px 0;
+	border-color: rgba(0, 0, 0, 0.1);
+
+	transition: border-color 100ms ease-in-out;
+
+	&::placeholder {
+		color: rgba(0, 0, 0, 0.5);
+	}
+
+	&:focus {
+		outline: none;
+
+		border-color: rgb(255, 165, 0);
+	}
+}
+
+// Select
+.select-wrapper {
+	position: relative;
+
+	&::after {
+		content: "expand_more";
+
+		pointer-events: none;
+
+		font-family: "Material Icons";
+		font-size: 24px;
+
+		right: 16px;
+		top: 50%;
+
+		transform: translateY(-50%);
+
+		position: absolute;
+	}
+
+	select.select {
+		-webkit-appearance: none;
+
+		// Required for user agent
+		background-color: transparent;
+
+		font-family: "Inter", sans-serif;
+		font-size: 14px;
+		font-weight: 500;
+		color: black;
+		line-height: 1;
+
+		height: 38px;
+
+		padding: 0 54px 0 14px;
+
+		border-radius: 4px;
+		border: 2px solid rgba(0, 0, 0, 0.1);
+
+		transition: border 100ms ease-in-out;
+
+		&:focus {
+			outline: none;
+
+			border: 2px solid rgb(255, 165, 0);
+		}
+	}
+}
+
 // Spacing utility expansion
 .mb-4px {
 	margin-bottom: 4px;
@@ -329,6 +412,38 @@ p.paragraph {
 
 .mb-24px {
 	margin-bottom: 24px;
+}
+
+.mr-4px {
+	margin-right: 4px;
+}
+
+.mr-8px {
+	margin-right: 8px;
+}
+
+.mr-16px {
+	margin-right: 16px;
+}
+
+.mr-24px {
+	margin-right: 24px;
+}
+
+.ml-4px {
+	margin-left: 4px;
+}
+
+.ml-8px {
+	margin-left: 8px;
+}
+
+.ml-16px {
+	margin-left: 16px;
+}
+
+.ml-24px {
+	margin-left: 24px;
 }
 
 .mt-4px {
@@ -373,7 +488,7 @@ p.paragraph {
 	}
 }
 
-#page-politicians, #page-bills {
+#page-members, #page-legislation {
 	padding-top: 24px;
 }
 
@@ -391,6 +506,7 @@ p.paragraph {
 			position: absolute;
 
 			width: 554px;
+			max-width: 100%;
 
 			z-index: -1;
 
@@ -424,6 +540,10 @@ p.paragraph {
 	#features {
 		padding-top: 64px;
 		padding-bottom: 64px;
+
+		img {
+			max-width: 100%;
+		}
 
 		.feature {
 			margin-top: 64px;

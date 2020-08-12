@@ -4,13 +4,68 @@ require("dotenv").config( );
 const express = require("express");
 const request = require("request");
 const states = require("us-state-codes");
+const geoip = require("geoip-lite");
 
 const app = express( );
 
+const CONGRESS = 116;
+
 // API
+
+app.use(function(request, response, next) {
+  response.header("Access-Control-Allow-Origin", "*"); // temporary
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  next( );
+});
+
+/*
+ *  /state
+ *  Returns the state of the user and the Congress members for that state
+ *
+ *  Default: California
+ *
+ */
+app.get("/state", function(request, response) {
+    const location = geoip.lookup(request.ip);
+
+    let state = "CA";
+
+    if(location && location.region && location.country === "US") {
+        state = location.region;
+    }
+
+    getMembers(state, function(members) {
+        if(members) {
+            response.status(200);
+            return response.json({ status: "success", state: states.getStateNameByStateCode(state), members: members });
+        }
+
+        response.status(404);
+        return response.json({ status: "error", error: "ProPublica error" });
+    });
+});
+
+/*
+ *  /members
+ *  Returns current Congress members
+ *
+ */
+app.get("/members", function(request, response) {
+    getMembers(function(members) {
+        if(members) {
+            response.status(200);
+            return response.json({ status: "success", members: members });
+        }
+
+        response.status(404);
+        return response.json({ status: "error", error: "ProPublica error" });
+    });
+});
 
 /*
  *  /members/:member/roles
+ *  Returns the roles for a Congress member
  *
  */
 app.get("/members/:member/roles", function(request, response) {
@@ -29,6 +84,7 @@ app.get("/members/:member/roles", function(request, response) {
 
 /*
  *  members/:member
+ *  Returns a Congress member
  *
  */
 app.get("/members/:member", function(request, response) {
@@ -51,6 +107,75 @@ app.listen(process.env.port, ( ) => {
 });
 
 // Functions
+
+/*
+ *  getMembers(state)
+ *
+ */
+function getMembers(state, callback) {
+    let identifiers = [ ];
+
+    if(typeof state === "function") {
+        callback = state;
+
+        state = null;
+    }
+
+    let temporaryMembers = [ ];
+
+    const senateRequestOptions = {
+        url: "https://api.propublica.org/congress/v1/" + CONGRESS + "/senate/members.json?in_office=true",
+        headers: {
+            "X-API-KEY": process.env.X_API_KEY
+        }
+    };
+
+    request.get(senateRequestOptions, function(error, response, body) {
+        // Prevent errors
+        if(error) callback(null);
+
+        temporaryMembers = temporaryMembers.concat(JSON.parse(body).results[0].members);
+
+        const houseRequestOptions = {
+            url: "https://api.propublica.org/congress/v1/" + CONGRESS + "/house/members.json?in_office=true",
+            headers: {
+                "X-API-KEY": process.env.X_API_KEY
+            }
+        };
+
+        request.get(houseRequestOptions, function(error, response, body) {
+            // Prevent errors
+            if(error) callback(null);
+
+            temporaryMembers = temporaryMembers.concat(JSON.parse(body).results[0].members);
+
+            let members = [ ];
+
+            for(const temporaryMember of temporaryMembers) {
+                if(state && temporaryMember.state !== state) continue;
+
+                if( identifiers.includes(temporaryMember.id) ) continue;
+
+                const member = {
+                    identifier: temporaryMember.id,
+                    first_name: temporaryMember.first_name,
+                    middle_name: temporaryMember.middle_name && temporaryMember.middle_name.length > 1 ? temporaryMember.middle_name : null,
+                    last_name: temporaryMember.last_name,
+                    suffix: temporaryMember.suffix && temporaryMember.suffix.length > 1 ? temporaryMember.suffix : null,
+                    state: states.getStateNameByStateCode(temporaryMember.state),
+                    party: temporaryMember.party === "R" ? "Republican" : (temporaryMember.party === "D" ? "Democrat" : "Other"),
+                    title: temporaryMember.title,
+                    short_title: temporaryMember.short_title
+                };
+
+                identifiers.push(member.identifier);
+                members.push(member);
+            }
+
+            callback(members);
+        });
+    });
+}
 
 /*
  *  getMemberRoles(member)
@@ -128,8 +253,9 @@ function getMember(identifier, callback) {
         const member = {
             identifier: result.id,
             first_name: result.first_name,
-            middle_name: result.middle_name.length > 0 ? result.middle_name : null,
+            middle_name: result.middle_name && result.middle_name.length > 1 ? result.middle_name : null,
             last_name: result.last_name,
+            suffix: result.suffix && result.suffix.length > 1 ? result.suffix : null,
             gender: result.gender === "M" ? "male" : "female",
             date_of_birth: result.date_of_birth,
             party: result.current_party === "R" ? "Republican" : (result.current_party === "D" ? "Democrat" : "Other"),
