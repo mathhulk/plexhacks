@@ -8,7 +8,10 @@ const geoip = require("geoip-lite");
 
 const app = express( );
 
-const CONGRESS = 116;
+const congress = 116;
+
+// Include territories for U.S. state codes
+const territories = { "GU": "Guam", "AS": "American Samoa", "VI": "U.S. Virgin Islands", "MP": "Northern Mariana Islands" };
 
 // API
 
@@ -109,6 +112,14 @@ app.listen(process.env.port, ( ) => {
 // Functions
 
 /*
+ *  getState(state)
+ *
+ */
+function getState(state) {
+	return territories[state] || states.getStateNameByStateCode(state);
+}
+
+/*
  *  getMembers(state)
  *
  */
@@ -124,7 +135,7 @@ function getMembers(state, callback) {
     let temporaryMembers = [ ];
 
     const senateRequestOptions = {
-        url: "https://api.propublica.org/congress/v1/" + CONGRESS + "/senate/members.json?in_office=true",
+        url: "https://api.propublica.org/congress/v1/" + congress + "/senate/members.json?in_office=true",
         headers: {
             "X-API-KEY": process.env.X_API_KEY
         }
@@ -137,7 +148,7 @@ function getMembers(state, callback) {
         temporaryMembers = temporaryMembers.concat(JSON.parse(body).results[0].members);
 
         const houseRequestOptions = {
-            url: "https://api.propublica.org/congress/v1/" + CONGRESS + "/house/members.json?in_office=true",
+            url: "https://api.propublica.org/congress/v1/" + congress + "/house/members.json?in_office=true",
             headers: {
                 "X-API-KEY": process.env.X_API_KEY
             }
@@ -162,7 +173,7 @@ function getMembers(state, callback) {
                     middle_name: temporaryMember.middle_name && temporaryMember.middle_name.length > 1 ? temporaryMember.middle_name : null,
                     last_name: temporaryMember.last_name,
                     suffix: temporaryMember.suffix && temporaryMember.suffix.length > 1 ? temporaryMember.suffix : null,
-                    state: states.getStateNameByStateCode(temporaryMember.state),
+                    state: getState(temporaryMember.state),
                     party: temporaryMember.party === "R" ? "Republican" : (temporaryMember.party === "D" ? "Democrat" : "Other"),
                     title: temporaryMember.title,
                     short_title: temporaryMember.short_title
@@ -205,7 +216,7 @@ function getMemberRoles(identifier, callback) {
                 chamber: role.chamber,
                 title: role.title,
                 short_title: role.short_title,
-                state: states.getStateNameByStateCode(role.state),
+                state: getState(role.state),
                 party: role.current_party === "R" ? "Republican" : (role.current_party === "D" ? "Democrat" : "Other"),
                 start_date: role.start_date,
                 end_date: role.end_date,
@@ -277,7 +288,7 @@ function getMember(identifier, callback) {
                 chamber: role.chamber,
                 title: role.title,
                 short_title: role.short_title,
-                state: states.getStateNameByStateCode(role.state),
+                state: getState(role.state),
                 party: role.current_party === "R" ? "Republican" : (role.current_party === "D" ? "Democrat" : "Other"),
                 start_date: role.start_date,
                 end_date: role.end_date,
