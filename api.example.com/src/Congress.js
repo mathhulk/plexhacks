@@ -10,6 +10,58 @@ class Congress {
         this.key = key;
     }
 
+    getLegislation(callback) {
+        // Prevent empty functions
+        if(typeof callback !== "function") return;
+
+        // Requires database
+    }
+
+    getMemberVotes(identifier, callback) {
+        // Prevent empty functions
+        if(typeof callback !== "function") return;
+        
+        // Requires database
+    }
+
+    getMemberCommittees(identifier, callback) {
+        // Prevent empty functions
+        if(typeof callback !== "function") return;
+
+        const options = {
+            url: API_ROOT + "/members/" + identifier + ".json",
+            headers: { "X-API-KEY": this.key }
+        };
+
+        request.get(options, function(error, response, body) {
+            if(error) callback(null);
+
+            // Prevent 404 error
+            body = JSON.parse(body);
+            if(body.status === "ERROR") return callback(null);
+
+            const temporaryCommittees = body.results[0].roles[0].committees;
+
+            let committees = [ ];
+
+            for(const temporaryCommittee of temporaryCommittees) {
+                const committee = {
+                    identifier: temporaryCommittee.code,
+                    name: temporaryCommittee.name,
+                    side: temporaryCommittee.side,
+                    title: temporaryCommittee.title,
+                    start_date: temporaryCommittee.begin_date,
+                    end_date: temporaryCommittee.end_date,
+                    rank_in_party: temporaryCommittee.rank_in_party
+                }
+
+                committees.push(committee);
+            }
+
+            callback(committees);
+        });
+    }
+
     getMemberRoles(identifier, callback) {
         // Prevent empty functions
         if(typeof callback !== "function") return;
@@ -24,7 +76,7 @@ class Congress {
 
             // Prevent 404 error
             body = JSON.parse(body);
-            if(body.status === "ERROR") callback(null);
+            if(body.status === "ERROR") return callback(null);
 
             const temporaryRoles = body.results[0].roles;
 
@@ -32,14 +84,14 @@ class Congress {
 
             for(const temporaryRole of temporaryRoles) {
                 const role = {
-                    current: temporaryRole.congress === CURRENT_MEETING,
+                    current: parseInt(temporaryRole.congress) === CURRENT_MEETING,
 
                     congress: temporaryRole.congress,
                     chamber: temporaryRole.chamber,
                     title: temporaryRole.title,
                     short_title: temporaryRole.short_title,
                     state: getStateNameByStateCode(temporaryRole.state),
-                    party: temporaryRole.current_party === "R" ? "Republican" : (temporaryRole.current_party === "D" ? "Democrat" : "Other"),
+                    party: temporaryRole.party === "R" ? "Republican" : (temporaryRole.party === "D" ? "Democrat" : "Other"),
                     start_date: temporaryRole.start_date,
                     end_date: temporaryRole.end_date,
 
@@ -77,7 +129,7 @@ class Congress {
 
             // Prevent 404 error
             body = JSON.parse(body);
-            if(body.status === "ERROR") callback(null);
+            if(body.status === "ERROR") return callback(null);
 
             const result = body.results[0];
 
@@ -91,12 +143,12 @@ class Congress {
                 date_of_birth: result.date_of_birth,
                 party: result.current_party === "R" ? "Republican" : (result.current_party === "D" ? "Democrat" : "Other"),
                 in_office: result.in_office,
+                website: result.url,
 
-                links: {
-                    website: result.url,
-                    twitter: result.twitter_account ? "https://twitter.com/" + result.twitter_account : null,
-                    facebook: result.facebook_account ? "https://facebook.com/" + result.facebook_account : null,
-                    youtube: result.youtube_account ? "https://youtube.com/c/" + result.youtube_account : null
+                social_media: {
+                    twitter: result.twitter_account,
+                    facebook: result.facebook_account,
+                    youtube: result.youtube_account
                 },
 
                 roll: null

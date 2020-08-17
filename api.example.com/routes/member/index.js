@@ -7,9 +7,9 @@ const roles = require("./roles");
 router.get("/:identifier/roles", roles);
 
 /*const votes = require("./votes");
-router.get("/:identifier/votes", votes);
+router.get("/:identifier/votes", votes);*/
 
 const committees = require("./committees");
-router.get("/:identifier/committees", committees);*/
+router.get("/:identifier/committees", committees);
 
 module.exports = router;

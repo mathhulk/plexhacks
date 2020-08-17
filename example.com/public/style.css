@@ -205,6 +205,8 @@ p.paragraph {
       .navigation-bar ul.navigation-bar-menu li.menu-item a.item-link:hover {
         color: black;
         cursor: pointer; }
+      .navigation-bar ul.navigation-bar-menu li.menu-item a.item-link.disabled {
+        color: rgba(0, 0, 0, 0.25); }
       .navigation-bar ul.navigation-bar-menu li.menu-item a.item-link.active {
         background-color: rgba(255, 165, 0, 0.1);
         color: orange; }
@@ -310,7 +312,7 @@ input.input {
   padding-top: 48px;
   padding-bottom: 48px; }
 
-#page-members, #page-legislation {
+#members, #legislation {
   padding-top: 24px; }
 
 #explore {

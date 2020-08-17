@@ -2,7 +2,7 @@
 	<div id="application">
 		<nav class="navigation-bar">
 			<div class="container">
-				<router-link to="/" class="navigation-bar-brand" exact>
+				<router-link to="/" class="navigation-bar-brand">
 					<span class="important">polyglass.</span> political transparency.
 				</router-link>
 
@@ -10,17 +10,17 @@
 					<li class="menu-item">
 						<router-link to="/" class="item-link" exact>Explore</router-link>
 					</li>
+
 					<li class="menu-item">
 						<router-link to="/legislation" class="item-link">Legislation</router-link>
 					</li>
+
 					<li class="menu-item">
 						<router-link to="/members" class="item-link">Congress members</router-link>
 					</li>
+
 					<li class="menu-item">
-						<router-link to="/committees" class="item-link">Committees</router-link>
-					</li>
-					<li class="menu-item">
-						<router-link to="/organizations" class="item-link">Organizations</router-link>
+						<a class="item-link disabled">Organizations</a>
 					</li>
 				</ul>
 			</div>

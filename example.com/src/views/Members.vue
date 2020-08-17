@@ -1,5 +1,5 @@
 <template>
-    <div id="page-members">
+    <div id="members">
         <div class="container">
             <div class="d-flex mb-24px">
 
@@ -74,7 +74,6 @@ export default {
             members: null,
             currentMembers: null,
 
-            // Improve states list?
             states: [
                 "Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas",
                 "California", "Colorado", "Connecticut", "Delaware", "District of Columbia",
@@ -111,6 +110,7 @@ export default {
     },
 
     methods: {
+        // Utility
         getClassFromParty(party) {
             return "badge-" + party.toLowerCase( );
         },

@@ -18,9 +18,22 @@ const routes = [
     },
     {
         path: "/member/:identifier",
-        name: "Congress member",
         props: true,
-        component: ( ) => import(/* webpackChunkName: "member" */ "../views/Member.vue")
+        component: ( ) => import(/* webpackChunkName: "member" */ "../views/Member.vue"),
+        children: [
+            {
+                path: "/member/:identifier",
+                name: "Congress member",
+                props: true,
+                component: ( ) => import(/* webpackChunkName: "member" */ "../views/Member/Roles.vue")
+            },
+            {
+                path: "/member/:identifier/committees",
+                name: "Congress member committees",
+                props: true,
+                component: ( ) => import(/* webpackChunkName: "member" */ "../views/Member/Committees.vue")
+            }
+        ]
     }
 ];
 
