@@ -1,241 +1,17 @@
-const states = [
-    {
-        "name": "Alabama",
-        "abbreviation": "AL"
-    },
-    {
-        "name": "Alaska",
-        "abbreviation": "AK"
-    },
-    {
-        "name": "American Samoa",
-        "abbreviation": "AS"
-    },
-    {
-        "name": "Arizona",
-        "abbreviation": "AZ"
-    },
-    {
-        "name": "Arkansas",
-        "abbreviation": "AR"
-    },
-    {
-        "name": "California",
-        "abbreviation": "CA"
-    },
-    {
-        "name": "Colorado",
-        "abbreviation": "CO"
-    },
-    {
-        "name": "Connecticut",
-        "abbreviation": "CT"
-    },
-    {
-        "name": "Delaware",
-        "abbreviation": "DE"
-    },
-    {
-        "name": "District Of Columbia",
-        "abbreviation": "DC"
-    },
-    {
-        "name": "Federated States Of Micronesia",
-        "abbreviation": "FM"
-    },
-    {
-        "name": "Florida",
-        "abbreviation": "FL"
-    },
-    {
-        "name": "Georgia",
-        "abbreviation": "GA"
-    },
-    {
-        "name": "Guam",
-        "abbreviation": "GU"
-    },
-    {
-        "name": "Hawaii",
-        "abbreviation": "HI"
-    },
-    {
-        "name": "Idaho",
-        "abbreviation": "ID"
-    },
-    {
-        "name": "Illinois",
-        "abbreviation": "IL"
-    },
-    {
-        "name": "Indiana",
-        "abbreviation": "IN"
-    },
-    {
-        "name": "Iowa",
-        "abbreviation": "IA"
-    },
-    {
-        "name": "Kansas",
-        "abbreviation": "KS"
-    },
-    {
-        "name": "Kentucky",
-        "abbreviation": "KY"
-    },
-    {
-        "name": "Louisiana",
-        "abbreviation": "LA"
-    },
-    {
-        "name": "Maine",
-        "abbreviation": "ME"
-    },
-    {
-        "name": "Marshall Islands",
-        "abbreviation": "MH"
-    },
-    {
-        "name": "Maryland",
-        "abbreviation": "MD"
-    },
-    {
-        "name": "Massachusetts",
-        "abbreviation": "MA"
-    },
-    {
-        "name": "Michigan",
-        "abbreviation": "MI"
-    },
-    {
-        "name": "Minnesota",
-        "abbreviation": "MN"
-    },
-    {
-        "name": "Mississippi",
-        "abbreviation": "MS"
-    },
-    {
-        "name": "Missouri",
-        "abbreviation": "MO"
-    },
-    {
-        "name": "Montana",
-        "abbreviation": "MT"
-    },
-    {
-        "name": "Nebraska",
-        "abbreviation": "NE"
-    },
-    {
-        "name": "Nevada",
-        "abbreviation": "NV"
-    },
-    {
-        "name": "New Hampshire",
-        "abbreviation": "NH"
-    },
-    {
-        "name": "New Jersey",
-        "abbreviation": "NJ"
-    },
-    {
-        "name": "New Mexico",
-        "abbreviation": "NM"
-    },
-    {
-        "name": "New York",
-        "abbreviation": "NY"
-    },
-    {
-        "name": "North Carolina",
-        "abbreviation": "NC"
-    },
-    {
-        "name": "North Dakota",
-        "abbreviation": "ND"
-    },
-    {
-        "name": "Northern Mariana Islands",
-        "abbreviation": "MP"
-    },
-    {
-        "name": "Ohio",
-        "abbreviation": "OH"
-    },
-    {
-        "name": "Oklahoma",
-        "abbreviation": "OK"
-    },
-    {
-        "name": "Oregon",
-        "abbreviation": "OR"
-    },
-    {
-        "name": "Palau",
-        "abbreviation": "PW"
-    },
-    {
-        "name": "Pennsylvania",
-        "abbreviation": "PA"
-    },
-    {
-        "name": "Puerto Rico",
-        "abbreviation": "PR"
-    },
-    {
-        "name": "Rhode Island",
-        "abbreviation": "RI"
-    },
-    {
-        "name": "South Carolina",
-        "abbreviation": "SC"
-    },
-    {
-        "name": "South Dakota",
-        "abbreviation": "SD"
-    },
-    {
-        "name": "Tennessee",
-        "abbreviation": "TN"
-    },
-    {
-        "name": "Texas",
-        "abbreviation": "TX"
-    },
-    {
-        "name": "Utah",
-        "abbreviation": "UT"
-    },
-    {
-        "name": "Vermont",
-        "abbreviation": "VT"
-    },
-    {
-        "name": "Virgin Islands",
-        "abbreviation": "VI"
-    },
-    {
-        "name": "Virginia",
-        "abbreviation": "VA"
-    },
-    {
-        "name": "Washington",
-        "abbreviation": "WA"
-    },
-    {
-        "name": "West Virginia",
-        "abbreviation": "WV"
-    },
-    {
-        "name": "Wisconsin",
-        "abbreviation": "WI"
-    },
-    {
-        "name": "Wyoming",
-        "abbreviation": "WY"
-    }
-];
+const states = {
+	"AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+	"CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia", "FL": "Florida",
+	"GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", 
+	"IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine",
+	"MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi",
+	"MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire", 
+	"NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina", "ND": "North Dakota",
+	"OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+	"SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
+	"VT": "Vermont", "VA": "Virginia", "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin",
+	"WY": "Wyoming", "PR": "Puerto Rico", "GU": "Guam", "AS": "American Samoa", "VI": "U.S. Virgin Islands",
+	"MP": "Northern Mariana Islands"
+};
 
 let eventBus = new Vue( );
 
@@ -439,7 +215,7 @@ Vue.component("page-explore", {
 					<div class="card card-hover mb-24px"
 						  @click="openPolitician(politician.identifier)">
 						<div class="badge"
-							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
+							 :class="getPartyClass(politician.party)">{{ politician.party }}</div>
 						<h2 class="heading">{{ politician.name }}</h2>
 						<p class="paragraph"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
 					</div>
@@ -482,11 +258,7 @@ Vue.component("page-explore", {
 
 		// Redundant from politicians page
 		getPartyClass(party) {
-			return "badge-" + party;
-		},
-
-		getPartyName(party) {
-			return party.charAt(0).toUpperCase( ) + party.slice(1);
+			return "badge-" + party.toLowerCase( );
 		},
 
 		openPolitician(politician) {
@@ -530,22 +302,22 @@ Vue.component("page-explore", {
 						identifier: member.id,
 						name: member.first_name + " " + member.last_name,
 						role: member.title,
-						state: states[ states.findIndex(state => state.abbreviation === member.state) ].name
+						state: states[member.state]
 					};
 
 					switch(member.party) {
 						case "R":
-							politician.party = "republican";
+							politician.party = "Republican";
 
 							break;
 
 						case "D":
-							politician.party = "democrat";
+							politician.party = "Democrat";
 
 							break;
 
 						default:
-							politician.party = "other"
+							politician.party = "Other"
 					};
 
 					politicians.push(politician);
@@ -559,8 +331,10 @@ Vue.component("page-explore", {
 
 Vue.component("page-bills", {
 	template: `
-	<div id="page-bills pt-24px">
+	<div id="page-legislation">
 		<div class="container">
+			<p class="paragraph text-center mb-24px">This <span class="important">demonstration</span> only displays the 20 most recent bills passed by Congress.</p>
+	
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="bill in bills">
@@ -607,8 +381,6 @@ Vue.component("page-bills", {
 			let bills = [ ];
 
 			for(const passedBill of passedBills) {
-				console.log(passedBill)
-
 				const bill = {
 					identifier: passedBill.bill_id,
 					number: passedBill.number,
@@ -627,7 +399,7 @@ Vue.component("page-bills", {
 
 Vue.component("page-politicians", {
 	template: `
-	<div id="page-politicians">
+	<div id="page-members">
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
@@ -635,7 +407,7 @@ Vue.component("page-politicians", {
 					<div class="card card-hover mb-24px"
 					 	  @click="openPolitician(politician.identifier)">
 						<div class="badge"
-							 :class="getPartyClass(politician.party)">{{ getPartyName(politician.party) }}</div>
+							 :class="getPartyClass(politician.party)">{{ politician.party }}</div>
 						<h2 class="heading mb-4px">{{ politician.name }}</h2>
 						<p class="paragraph"><span class="important">{{ politician.role }}</span> of <span class="important">{{ politician.state }}</span></p>
 					</div>
@@ -654,11 +426,7 @@ Vue.component("page-politicians", {
 
 	methods: {
 		getPartyClass(party) {
-			return "badge-" + party;
-		},
-
-		getPartyName(party) {
-			return party.charAt(0).toUpperCase( ) + party.slice(1);
+			return "badge-" + party.toLowerCase( );
 		},
 
 		openPolitician(politician) {
@@ -696,22 +464,22 @@ Vue.component("page-politicians", {
 						identifier: member.id,
 						name: member.first_name + " " + member.last_name,
 						role: member.title,
-						state: states[ states.findIndex(state => state.abbreviation === member.state) ].name
+						state: states[member.state]
 					};
 
 					switch(member.party) {
 						case "R":
-							politician.party = "republican";
+							politician.party = "Republican";
 
 							break;
 
 						case "D":
-							politician.party = "democrat";
+							politician.party = "Democrat";
 
 							break;
 
 						default:
-							politician.party = "other"
+							politician.party = "Other"
 					};
 
 					this.politicians.push(politician);
@@ -748,19 +516,17 @@ Vue.component("page-bill", {
 			</div>
 		</div>
 
-		<nav class="navigation-bar navigation-bar-inline">
+		<nav class="navigation-bar navigation-bar-inline mb-24px">
 			<div class="container">
 				<ul class="navigation-bar-menu">
 					<li class="menu-item">
 						<a class="item-link active">Votes</a>
 					</li>
-
-					<li class="menu-item">
-						<a class="item-link">Actions</a>
-					</li>
 				</ul>
 			</div>
 		</nav>
+		
+		<p class="paragraph text-center">This <span class="important">demonstration</span> cannot display a summary of voting positions for this bill.</p>
 	</div>
 	`,
 
@@ -815,13 +581,13 @@ Vue.component("page-politician", {
 	props: [ "politician" ],
 
 	template: `
-	<div id="page-politician">
+	<div v-if="name" id="page-politician">
 		<div class="header">
 			<div class="container">
 				<div class="header-split">
 					<div class="header-left">
 						<div class="badge"
-							 :class="partyClass">{{ partyName }}</div>
+							 :class="partyClass">{{ party }}</div>
 						<h1 class="heading mb-4px">{{ name }}</h1>
 						<p class="paragraph"><span class="important">{{ role }}</span> of <span class="important">{{ state }}</span></p>
 					</div>
@@ -843,12 +609,14 @@ Vue.component("page-politician", {
 				</ul>
 			</div>
 		</nav>
+		
+		<p class="paragraph text-center mb-24px">This <span class="important">demonstration</span> does not include every vote.</p>
 
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4 col-md-6"
 					 v-for="vote in votes">
-					<div class="card card-hover"
+					<div class="card card-hover mb-24px"
 					 	 @click="openBill(vote.identifier)">
 						<h2 class="heading mb-4px">{{ vote.number }}</h2>
 						<p class="paragraph mb-24px"><span class="important">{{ vote.time }}</span> on <span class="important">{{ vote.date }}</span></p>
@@ -903,11 +671,7 @@ Vue.component("page-politician", {
 
 	computed: {
 		partyClass( ) {
-			return "badge-" + this.party;
-		},
-
-		partyName( ) {
-			return this.party ? this.party.charAt(0).toUpperCase( ) + this.party.slice(1) : null;
+			return "badge-" + this.party.toLowerCase( );
 		},
 
 		twitter_url( ) {
@@ -936,11 +700,9 @@ Vue.component("page-politician", {
 			const result = response.results[0];
 			const role = result.roles[0];
 
-			console.log(result);
-
 			this.name = result.first_name + " " + result.last_name;
 			this.role = role.title;
-			this.state = states[ states.findIndex(state => state.abbreviation === role.state) ].name;
+			this.state = states[role.state];
 
 			this.url = result.url;
 			this.twitter = result.twitter_account;
@@ -949,17 +711,17 @@ Vue.component("page-politician", {
 
 			switch(result.current_party) {
 				case "R":
-					this.party = "republican";
+					this.party = "Republican";
 
 					break;
 
 				case "D":
-					this.party = "democrat";
+					this.party = "Democrat";
 
 					break;
 
 				default:
-					this.party = "other"
+					this.party = "Other"
 			}
 
 			const votesRequest = {
