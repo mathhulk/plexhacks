@@ -63,6 +63,12 @@
     </div>
 </template>
 
+<style lang="scss">
+#members {
+    padding-top: 24px;
+}
+</style>
+
 <script>
 import axios from "axios";
 

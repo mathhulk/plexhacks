@@ -1,0 +1,35 @@
+a.icon-button {
+    border-radius: 50%;
+
+    height: 40px;
+    width: 40px;
+
+    position: relative;
+
+    display: inline-block;
+
+    transition: background-color 100ms ease-in-out;
+
+    i.material-icons {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        color: rgba(0, 0, 0, 0.5);
+
+        transition: color 100ms ease-in-out;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+
+        cursor: pointer;
+
+        i.material-icons {
+            color: black;
+        }
+    }
+}

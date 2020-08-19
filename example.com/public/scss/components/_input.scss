@@ -1,0 +1,28 @@
+input.input {
+	// Required for user agent
+	background-color: transparent;
+
+	font-family: "Inter", sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	color: black;
+	line-height: 1;
+
+	height: 38px;
+
+	border-type: solid;
+	border-width: 0 0 2px 0;
+	border-color: rgba(0, 0, 0, 0.1);
+
+	transition: border-color 100ms ease-in-out;
+
+	&::placeholder {
+		color: rgba(0, 0, 0, 0.5);
+	}
+
+	&:focus {
+		outline: none;
+
+		border-color: rgb(255, 165, 0);
+	}
+}

@@ -1,0 +1,114 @@
+nav.navigation-bar {
+	display: flex;
+	align-items: center;
+
+	height: 56px;
+
+	background-color: white;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	> .container, > .container-fluid {
+		display: flex;
+		align-items: center;
+
+		height: 56px;
+	}
+
+    // Inline navigation-bar
+	&.navigation-bar-inline {
+		position: relative;
+
+		z-index: 1;
+
+		ul.navigation-bar-menu li.menu-item a.item-link.active {
+			border-radius: 8px 8px 0 0;
+		}
+	}
+
+	h2.navigation-bar-title {
+		font-size: 14px;
+		font-weight: 500;
+		color: black;
+		line-height: 1;
+	}
+
+	a.navigation-bar-brand {
+		font-size: 16px;
+		font-weight: 300;
+		color: rgba(0, 0, 0, 0.5);
+		line-height: 1;
+
+		.important {
+			font-weight: 500;
+			color: rgb(255, 165, 0);
+		}
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	ul.navigation-bar-menu {
+		display: flex;
+
+		list-style-type: none;
+
+		li.menu-item {
+			a.item-link {
+				display: flex;
+				align-items: center;
+				position: relative;
+
+				font-size: 14px;
+				font-weight: 600;
+				color: rgba(0, 0, 0, 0.5);
+				line-height: 1;
+
+				height: 56px;
+				padding-right: 12px;
+				padding-left: 12px;
+
+				transition: color 100ms ease-in-out,
+							background-color 100ms ease-in-out;
+
+				&::after {
+					// Required for pseudo
+					content: "";
+
+					height: 2px;
+					width: 100%;
+
+					position: absolute;
+
+					background-color: transparent;
+
+					left: 0;
+					bottom: 0;
+
+					transition: background-color 100ms ease-in-out;
+				}
+
+				&:hover {
+					color: black;
+
+					cursor: pointer;
+				}
+
+				&.disabled {
+					color: rgba(0, 0, 0, 0.25);
+				}
+
+				&.active {
+					background-color: rgba(255, 165, 0, 0.1);
+
+					color: rgb(255, 165, 0);
+
+					&::after {
+						background-color: rgb(255, 165, 0);
+					}
+				}
+			}
+		}
+	}
+}

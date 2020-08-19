@@ -1,0 +1,99 @@
+@import "components/badge",
+		"components/button",
+		"components/card",
+		"components/header",
+		"components/heading",
+		"components/input",
+		"components/navigation-bar",
+		"components/paragraph",
+		"components/paragraph",
+		"components/select",
+		"components/sub-heading",
+		"components/icon-button",
+		"components/window";
+
+/*
+ *	GLOBAL
+ *
+ */
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+
+	background-color: #f8f9fa;
+}
+
+h1, h2, h3, h4, h5, p, body, ul {
+	margin: 0;
+}
+
+ul {
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+/*
+ *	UTILITIES
+ *
+ */
+$sizes: 4px, 8px, 16px, 24px, 48px, 64px;
+
+@each $size in $sizes {
+	.my-#{$size} {
+		margin-top: $size;
+		margin-bottom: $size;
+	}
+
+	.mx-#{$size} {
+		margin-right: $size;
+		margin-left: $size;
+	}
+
+	.mt-#{$size} {
+		margin-top: $size;
+	}
+
+	.mr-#{$size} {
+		margin-right: $size;
+	}
+
+	.ml-#{$size} {
+		margin-left: $size;
+	}
+
+	.mb-#{$size} {
+		margin-bottom: $size;
+	}
+
+	.py-#{$size} {
+		padding-top: $size;
+		padding-bottom: $size;
+	}
+
+	.px-#{$size} {
+		padding-right: $size;
+		padding-left: $size;
+	}
+
+	.pt-#{$size} {
+		padding-top: $size;
+	}
+
+	.pr-#{$size} {
+		padding-right: $size;
+	}
+
+	.pl-#{$size} {
+		padding-left: $size;
+	}
+
+	.pb-#{$size} {
+		padding-bottom: $size;
+	}
+}

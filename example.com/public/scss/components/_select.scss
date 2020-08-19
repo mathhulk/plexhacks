@@ -1,0 +1,51 @@
+.select-wrapper {
+	position: relative;
+
+	&::after {
+		content: "expand_more";
+
+		pointer-events: none;
+
+		font-family: "Material Icons";
+		font-size: 24px;
+
+		right: 16px;
+		top: 50%;
+
+		transform: translateY(-50%);
+
+		position: absolute;
+	}
+
+    /*
+     *  ISSUE: FONT CUT OFF
+     *
+     */
+	select.select {
+		-webkit-appearance: none;
+
+		// Required for user agent
+		background-color: transparent;
+
+		font-family: "Inter", sans-serif;
+		font-size: 14px;
+		font-weight: 500;
+		color: black;
+		line-height: 1;
+
+		height: 38px;
+
+		padding: 0 54px 0 14px;
+
+		border-radius: 4px;
+		border: 2px solid rgba(0, 0, 0, 0.1);
+
+		transition: border 100ms ease-in-out;
+
+		&:focus {
+			outline: none;
+
+			border: 2px solid rgb(255, 165, 0);
+		}
+	}
+}

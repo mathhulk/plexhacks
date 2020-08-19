@@ -1,0 +1,23 @@
+.badge {
+	display: inline-block;
+    
+	margin-bottom: 8px;
+
+	border-radius: 12px;
+	padding: 6px 12px;
+
+	font-size: 12px;
+	font-weight: 500;
+	color: white;
+	line-height: 1;
+
+	background-color: rgb(255, 165, 0);
+
+	&.badge-republican {
+		background-color: #f44336;
+	}
+
+	&.badge-democrat {
+		background-color: #3d5afe;
+	}
+}

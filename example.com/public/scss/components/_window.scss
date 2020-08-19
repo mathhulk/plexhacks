@@ -1,0 +1,81 @@
+.window {
+    position: fixed;
+
+    z-index: 999;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+
+    left: 0;
+    top: 0;
+
+    background-color: white;
+
+    ul.window-menu {
+		display: flex;
+        flex-direction: column;
+
+		list-style-type: none;
+
+		li.menu-item {
+			a.item-link {
+                display: flex;
+                align-items: center;
+				position: relative;
+
+				font-size: 14px;
+				font-weight: 600;
+				color: rgba(0, 0, 0, 0.5);
+				line-height: 1;
+
+				height: 56px;
+
+                // Match .container-fluid, .container
+				padding-right: 15px;
+				padding-left: 15px;
+
+				transition: color 100ms ease-in-out,
+							background-color 100ms ease-in-out;
+
+				&::after {
+					// Required for pseudo
+					content: "";
+
+					height: 56px;
+					width: 2px;
+
+					position: absolute;
+
+					background-color: transparent;
+
+					left: 0;
+					bottom: 0;
+
+					transition: background-color 100ms ease-in-out;
+				}
+
+				&:hover {
+					color: black;
+
+					cursor: pointer;
+				}
+
+				&.disabled {
+					color: rgba(0, 0, 0, 0.25);
+				}
+
+				&.active {
+					background-color: rgba(255, 165, 0, 0.1);
+
+					color: rgb(255, 165, 0);
+
+					&::after {
+						background-color: rgb(255, 165, 0);
+					}
+				}
+			}
+		}
+	}
+}
